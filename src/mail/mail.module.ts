@@ -7,6 +7,7 @@ import { join } from 'path';
 import { MailController } from './mail.controller';
 import { MailService } from './mail.service';
 import { MailProcessor } from './mail.processor';
+import { MAIL_QUEUE } from './constants';
 
 @Module({
   imports: [
@@ -35,7 +36,7 @@ import { MailProcessor } from './mail.processor';
       }),
     }),
     BullModule.registerQueue({
-      name: 'MAIL_QUEUE',
+      name: MAIL_QUEUE,
     }),
   ],
   controllers: [MailController],

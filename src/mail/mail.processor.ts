@@ -9,14 +9,16 @@ import {
 import { Job } from 'bull';
 import { MailerService } from '@nestjs-modules/mailer';
 
+import { MAIL_QUEUE, SEND_MAIL } from './constants';
+
 @Injectable()
-@Processor('MAIL_QUEUE')
+@Processor(MAIL_QUEUE)
 export class MailProcessor {
   private readonly _logger = new Logger(MailProcessor.name);
 
   constructor(private _mailerService: MailerService) {}
 
-  @Process('SEND_MAIL') // here is the name of the executed process
+  @Process(SEND_MAIL) // here is the name of the executed process
   async sendMail(job: Job<{ email: string }>) {
     this._logger.log(
       `Sending confirm registration email to '${job.data.email}'`,

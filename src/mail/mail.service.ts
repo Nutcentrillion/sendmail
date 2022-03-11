@@ -2,15 +2,17 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 
+import { MAIL_QUEUE, SEND_MAIL } from './constants';
+
 @Injectable()
 export class MailService {
   private readonly _logger = new Logger(MailService.name);
 
-  constructor(@InjectQueue('MAIL_QUEUE') private readonly _mailQueue: Queue) {}
+  constructor(@InjectQueue(MAIL_QUEUE) private readonly _mailQueue: Queue) {}
 
   async sendMail(email: string): Promise<void> {
     try {
-      await this._mailQueue.add('SEND_MAIL', {
+      await this._mailQueue.add(SEND_MAIL, {
         email,
       });
     } catch (error) {
